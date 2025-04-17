@@ -304,3 +304,16 @@ contents={%
 }
 $endif$
 $endif$
+
+% Define a macro to handle section breaks based on metadata
+$if(section-break-newpage)$
+\newcommand{\sectionbreak}{\newpage}
+$elseif(section-break-clearpage)$
+\newcommand{\sectionbreak}{\clearpage}
+$else$
+\newcommand{\sectionbreak}{}
+$endif$
+
+% Redefine \section to include the section break
+\let\oldsection\section
+\renewcommand{\section}[1]{\sectionbreak\oldsection{#1}}

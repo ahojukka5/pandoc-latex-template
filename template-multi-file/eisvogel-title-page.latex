@@ -12,12 +12,20 @@ $endif$
 $if(titlepage-background)$
 \tikz[remember picture,overlay] \node[inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{$titlepage-background$}};
 $endif$
-\newcommand{\colorRule}[3][black]{\textcolor[HTML]{#1}{\rule{#2}{#3}}}
 \begin{flushleft}
 \noindent
 \\[-1em]
 \color[HTML]{$if(titlepage-text-color)$$titlepage-text-color$$else$5F5F5F$endif$}
+
+$if(titlepage-rule-hidden)$
+% titlepage rule: titlepage rule is hidden, adding empty space instead
+\vspace{$if(titlepage-rule-height)$$titlepage-rule-height$$else$4$endif$pt}
+$else$
+% titlepage rule: show titlepage rule
+\newcommand{\colorRule}[3][black]{\textcolor[HTML]{#1}{\rule{#2}{#3}}}
 \makebox[0pt][l]{\colorRule[$if(titlepage-rule-color)$$titlepage-rule-color$$else$435488$endif$]{1.3\textwidth}{$if(titlepage-rule-height)$$titlepage-rule-height$$else$4$endif$pt}}
+$endif$
+
 \par
 \noindent
 
@@ -52,8 +60,19 @@ $else$
 $endif$
 
 $if(titlepage-logo)$
+
+$if(titlepage-logo-position-bottom-right)$
+% Logo position: place logo to the bottom right corner of page
+\tikz[remember picture, overlay]
+\node[anchor=south east, inner sep=0] at ($$(current page.south east) + (-1cm, 1cm)$$) {
+    \includegraphics[width=$if(logo-width)$$logo-width$$else$35mm$endif$]{$titlepage-logo$};
+};
+$else$
+% Logo position: place logo to the bottom left corner of page
 \noindent
 \includegraphics[width=$if(logo-width)$$logo-width$$else$35mm$endif$, left]{$titlepage-logo$}
+$endif$
+
 $endif$
 
 $if(titlepage-background)$

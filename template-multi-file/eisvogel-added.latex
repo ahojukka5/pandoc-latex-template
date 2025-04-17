@@ -11,6 +11,9 @@ $if(titlepage)$
 $if(titlepage-background)$
 \usepackage{tikz}
 $endif$
+$if(titlepage-logo-position-bottom-right)$
+\usetikzlibrary{calc} % tikz calc library is needed to position logo in title page
+$endif$
 $if(geometry)$
 $else$
 \usepackage[margin=2.5cm,includehead=true,includefoot=true,centering]{geometry}
